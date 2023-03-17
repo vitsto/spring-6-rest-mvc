@@ -1,12 +1,11 @@
 package guru.springframework.spring6restmvc.controller;
 
+import guru.springframework.spring6restmvc.model.Beer;
 import guru.springframework.spring6restmvc.model.Customer;
 import guru.springframework.spring6restmvc.service.CustomerService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,4 +27,9 @@ public class CustomerController {
         return customerService.getCustomerById(customerId);
     }
 
+    @PostMapping
+    public ResponseEntity<UUID> handlePost(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.saveNewCustomer(customer);
+        return ResponseEntity.ok(savedCustomer.getId());
+    }
 }
